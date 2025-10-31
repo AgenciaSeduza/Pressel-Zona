@@ -1,146 +1,102 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Acesso ao Telegram</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap" rel="stylesheet">
+
   <style>
     body {
+      font-family: 'Inter', sans-serif;
       margin: 0;
-      background-color: #0b0b0b;
-      color: #eaeaea;
-      font-family: "Inter", Arial, sans-serif;
-      height: 100vh;
+      padding: 0;
+      background-color: #0f0f10;
+      color: #f5f5f5;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-    }
-
-    .card {
-      background: #141414;
-      padding: 40px 50px;
-      border-radius: 16px;
+      justify-content: flex-start;
+      min-height: 100vh;
       text-align: center;
-      box-shadow: 0 0 30px rgba(0, 162, 255, 0.15);
-      width: 95%;
-      max-width: 420px;
-      animation: fadeIn 0.6s ease-out;
     }
 
-    .icon {
-      background: linear-gradient(135deg, #00a2ff, #0077b6);
-      border-radius: 50%;
-      width: 64px;
-      height: 64px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 20px;
+    .container {
+      max-width: 400px;
+      padding: 2rem;
+      margin-top: 2rem;
     }
 
-    .icon svg {
-      fill: white;
-      width: 36px;
-      height: 36px;
+    .foto {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
     }
 
     h1 {
-      font-size: 1.6rem;
-      margin-bottom: 10px;
-      color: #fff;
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+      color: #ffffff;
     }
 
     p {
       font-size: 1rem;
-      color: #ccc;
-      margin-bottom: 25px;
+      margin-bottom: 1.8rem;
+      color: #d1d1d1;
     }
 
-    .progress {
-      height: 8px;
-      background-color: #1f1f1f;
-      border-radius: 10px;
-      overflow: hidden;
-      margin-bottom: 15px;
-    }
-
-    .progress-bar {
-      height: 8px;
-      width: 0%;
-      background: linear-gradient(90deg, #00a2ff, #0084ff);
-      border-radius: 10px;
-      transition: width 0.3s linear;
-    }
-
-    .status {
-      font-size: 0.95rem;
-      color: #00a2ff;
-    }
-
-    a {
-      color: #00a2ff;
+    .btn {
+      background: #229ED9; /* Azul Telegram */
+      color: #fff;
+      padding: 0.9rem 2rem;
       text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      display: inline-block;
+      transition: 0.2s ease;
+      font-size: 1rem;
     }
 
-    a:hover {
-      text-decoration: underline;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+    .btn:hover {
+      filter: brightness(1.1);
+      transform: scale(1.03);
     }
   </style>
-</head>
-<body>
-  <div class="card">
-    <div class="icon">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240">
-        <path d="M120,0C53.73,0,0,53.73,0,120s53.73,120,120,120,120-53.73,120-120S186.27,0,120,0Zm50.36,84.72L97.51,129.3l-20.38-9.51c-2.45-1.14-2.46-4.57,0-5.72l87.23-40.67c2.35-1.1,4.97,1.05,4.17,3.32Z"/>
-      </svg>
-    </div>
-    <h1>ACESSO AO TELEGRAM</h1>
-    <p>Você será redirecionado automaticamente<br>para o Telegram.</p>
-
-    <div class="progress">
-      <div class="progress-bar" id="progressBar"></div>
-    </div>
-    <div class="status" id="status">Redirecionando... 0%</div>
-
-    <p>Caso não redirecione, <a href="https://apextry.com/go/tktkadszona">clique aqui</a>.</p>
-  </div>
-
-  <script>
-    const redirectUrl = "https://apextry.com/go/tktkadszona";
-    let progress = 0;
-    const bar = document.getElementById("progressBar");
-    const status = document.getElementById("status");
-
-    const interval = setInterval(() => {
-      progress += 5;
-      bar.style.width = progress + "%";
-      status.textContent = `Redirecionando... ${progress}%`;
-
-      if (progress >= 100) {
-        clearInterval(interval);
-        window.location.href = redirectUrl;
-      }
-    }, 100); // redireciona em ~2 segundos
-  </script>
 
   <!-- TikTok Pixel Code Start -->
   <script>
   !function (w, d, t) {
-    w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];
-    ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],
-    ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);
-    ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},
-    ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
-    ;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
+    w.TiktokAnalyticsObject=t;
+    var ttq=w[t]=w[t]||[];
+    ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"];
+    ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};
+    for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);
+    ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e};
+    ttq.load=function(e,n){
+      var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;
+      ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};
+      n=document.createElement("script");
+      n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;
+      e=document.getElementsByTagName("script")[0];
+      e.parentNode.insertBefore(n,e)
+    };
+
     ttq.load('D41U41BC77UCH1AE8SRG');
     ttq.page();
   }(window, document, 'ttq');
   </script>
   <!-- TikTok Pixel Code End -->
+
+</head>
+<body>
+  <div class="container">
+    <!-- Espaço para sua imagem -->
+    <img src="foto.png" alt="Instruções para entrar no grupo" class="foto">
+
+    <h1>Acesso ao Telegram</h1>
+    <p>Clique no botão abaixo para continuar e entrar no grupo VIP.</p>
+
+    <a href="https://apextry.com/go/tktkadszona" class="btn">Entrar agora</a>
+  </div>
 </body>
 </html>
