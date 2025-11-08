@@ -84,7 +84,7 @@
     <a id="enter-btn" class="botao" href="https://apextry.com/go/tktkadszona" target="_blank">Entrar agora</a>
   </div>
 
-  <!-- TikTok Events API (Server-Side) - CORRIGIDO -->
+  <!-- TikTok Events API (Server-Side) - CORRIGIDO PARA VSA -->
   <script>
     const TIKTOK_PIXEL_ID = 'D478L63C77U1BLONNB2G';
     const TIKTOK_ACCESS_TOKEN = 'e84e20422383ee7292b2f1617eb56073ff1662e9';
@@ -95,14 +95,14 @@
       return `${eventName}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     }
 
-    // Função para enviar evento (com validação de content_id)
+    // Função para enviar evento (com content_id OBRIGATÓRIO para VSA)
     async function sendTikTokServerEvent(eventName, extraProps = {}) {
       const baseProps = {
-        content_type: 'product',
-        content_id: 'VIP_ACCESS_001',  // VALOR VÁLIDO E FIXO
-        content_name: 'Acesso VIP - Vazadinhos das Famosas',
+        content_type: 'product',  // Obrigatório para VSA
+        content_id: 'VIP_BANNER_001',  // ID FIXO VÁLIDO (não vazio!)
+        content_name: 'Banner VIP - Vazadinhos das Famosas',
         currency: 'BRL',
-        value: 18.00
+        value: 18.00  // Valor obrigatório para ROAS
       };
 
       const payload = {
@@ -129,9 +129,9 @@
         }
       };
 
-      // VALIDAÇÃO ANTES DO ENVIO
+      // Validação rigorosa para VSA
       if (!payload.properties.content_id || payload.properties.content_id.trim() === '') {
-        console.error('[TikTok] content_id inválido ou vazio!');
+        console.error('[TikTok VSA] content_id inválido!');
         return;
       }
 
@@ -147,33 +147,36 @@
 
         const result = await response.json();
         if (response.ok && result.code === 0) {
-          console.log(`[TikTok Server] ${eventName} enviado com sucesso!`);
+          console.log(`[TikTok VSA] ${eventName} enviado OK!`);
         } else {
-          console.error(`[TikTok Server] Erro ${eventName}:`, result);
+          console.error(`[TikTok VSA] Erro ${eventName}:`, result);
         }
       } catch (err) {
-        console.error('[TikTok Server] Falha na requisição:', err);
+        console.error('[TikTok VSA] Falha:', err);
       }
     }
 
-    // 1. ViewContent - ao carregar
+    // 1. ViewContent (com content_id fixo para VSA)
     window.addEventListener('load', () => {
       sendTikTokServerEvent('ViewContent');
-      if (window.ttq) ttq.track('ViewContent');
+      if (window.ttq) {
+        ttq.track('ViewContent', {
+          content_id: 'VIP_BANNER_001',  // Client-side também
+          content_type: 'product',
+          value: 18.00,
+          currency: 'BRL'
+        });
+      }
     });
 
-    // 2. ClickButton + CompleteRegistration - ao clicar
+    // 2. ClickButton + CompleteRegistration
     document.getElementById('enter-btn').addEventListener('click', () => {
-      sendTikTokServerEvent('ClickButton', {
-        content_name: 'Botão Entrar Agora'
-      });
-      sendTikTokServerEvent('CompleteRegistration', {
-        content_name: 'Entrada no Grupo VIP'
-      });
+      sendTikTokServerEvent('ClickButton', { content_name: 'Botão Entrar Agora' });
+      sendTikTokServerEvent('CompleteRegistration', { content_name: 'Entrada no Grupo VIP' });
 
       if (window.ttq) {
-        ttq.track('ClickButton');
-        ttq.track('CompleteRegistration');
+        ttq.track('ClickButton', { content_id: 'VIP_BANNER_001' });
+        ttq.track('CompleteRegistration', { content_id: 'VIP_BANNER_001' });
       }
     });
   </script>
