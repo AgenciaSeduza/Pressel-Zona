@@ -69,7 +69,7 @@
         var e=document.getElementsByTagName("script")[0];
         e.parentNode.insertBefore(n,e)
       };
-      ttq.load('D4B8ALBC77U4DODN3030');
+      ttq.load('D4CAJIRC77U8LSGFOIJ0');
       ttq.page();
     }(window, document, 'ttq');
   </script>
@@ -86,8 +86,8 @@
 
   <!-- TikTok Events API (Server-Side) - NOVO TOKEN E PIXEL -->
   <script>
-    const TIKTOK_PIXEL_ID = 'D4B8ALBC77U4DODN3030';
-    const TIKTOK_ACCESS_TOKEN = '05b22a2b0899a8b11c69293b07aad4afefde8595';
+    const TIKTOK_PIXEL_ID = 'D4CAJIRC77U8LSGFOIJ0';
+    const TIKTOK_ACCESS_TOKEN = '96e61088084e67622a5475353c8557c9f1badcaf';
     const API_ENDPOINT = 'https://business-api.tiktok.com/open_api/v1.3/event/track/';
 
     // Função para gerar event_id único
@@ -172,7 +172,10 @@
     // 2. ClickButton + CompleteRegistration
     document.getElementById('enter-btn').addEventListener('click', () => {
       sendTikTokServerEvent('ClickButton', { content_name: 'Botão Entrar Agora' });
-      sendTikTokServerEvent('CompleteRegistration', { content_name: 'Entrada no Grupo VIP' });
+      sendTikTokServerEvent('CompleteRegistration', { 
+        content_name: 'Entrada no Grupo VIP',
+        value: 18.00
+      });
 
       if (window.ttq) {
         ttq.track('ClickButton', { content_id: 'VIP_BANNER_001' });
