@@ -6,74 +6,19 @@
   <title>Acesso ao Telegram</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    body {
-      background-color: #0e0e0e;
-      color: white;
-      font-family: 'Poppins', sans-serif;
-      text-align: center;
-      margin: 0;
-      padding: 0;
-    }
-    .container {
-      max-width: 420px;
-      margin: 60px auto;
-      padding: 20px;
-      background-color: #141414;
-      border-radius: 14px;
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.08);
-    }
-    img {
-      width: 100%;
-      border-radius: 10px;
-      margin-bottom: 20px;
-    }
-    h1 {
-      font-size: 24px;
-      margin-bottom: 10px;
-    }
-    p {
-      color: #cccccc;
-      font-size: 15px;
-      margin-bottom: 25px;
-    }
-    .botao {
-      display: inline-block;
-      background-color: #0088cc;
-      color: white;
-      text-decoration: none;
-      padding: 14px 30px;
-      border-radius: 10px;
-      font-weight: 600;
-      transition: 0.3s;
-    }
-    .botao:hover {
-      background-color: #00aaff;
-      transform: scale(1.05);
-    }
+    body {background:#0e0e0e;color:white;font-family:'Poppins',sans-serif;text-align:center;margin:0;padding:0}
+    .container {max-width:420px;margin:60px auto;padding:20px;background:#141414;border-radius:14px;box-shadow:0 0 15px rgba(255,255,255,0.08)}
+    img {width:100%;border-radius:10px;margin-bottom:20px}
+    h1 {font-size:24px;margin-bottom:10px}
+    p {color:#ccc;font-size:15px;margin-bottom:25px}
+    .botao {display:inline-block;background:#0088cc;color:white;text-decoration:none;padding:14px 30px;border-radius:10px;font-weight:600;transition:.3s}
+    .botao:hover {background:#00aaff;transform:scale(1.05)}
   </style>
 
-  <!-- TikTok Pixel Code Start (NOVO PIXEL) -->
+  <!-- TikTok Pixel -->
   <script>
-    !function (w, d, t) {
-      w.TiktokAnalyticsObject=t;
-      var ttq=w[t]=w[t]||[];
-      ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"];
-      ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};
-      for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);
-      ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e};
-      ttq.load=function(e,n){
-        var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;
-        ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};
-        var n=document.createElement("script");
-        n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;
-        var e=document.getElementsByTagName("script")[0];
-        e.parentNode.insertBefore(n,e)
-      };
-      ttq.load('D455V8RC77U505N9060G');
-      ttq.page();
-    }(window, document, 'ttq');
+    !function (w, d, t) {w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.load=function(e){var n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src="https://analytics.tiktok.com/i18n/pixel/events.js?sdkid="+e+"&lib="+t;var e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};ttq.load('D455V8RC77U505N9060G');ttq.page();}(window, document, 'ttq');
   </script>
-  <!-- TikTok Pixel Code End -->
 </head>
 <body>
   <div class="container">
@@ -84,106 +29,69 @@
     <a id="enter-btn" class="botao" href="https://apextry.com/go/tktkadszona" target="_blank">Entrar agora</a>
   </div>
 
-  <!-- TikTok Events API (Server-Side) - NOVO TOKEN E PIXEL -->
   <script>
-    const TIKTOK_PIXEL_ID = 'D455V8RC77U505N9060G';
-    const TIKTOK_ACCESS_TOKEN = '3ca706076f67309a1e205e3f1f5d9aed0acef913';
-    const API_ENDPOINT = 'https://business-api.tiktok.com/open_api/v1.3/event/track/';
+    const PIXEL_ID = 'D455V8RC77U505N9060G';
+    const TOKEN = '3ca706076f67309a1e205e3f1f5d9aed0acef913';
+    const API = 'https://business-api.tiktok.com/open_api/v1.3/event/track/';
 
-    // Função para gerar event_id único
-    function generateEventId(eventName) {
-      return `${eventName}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    const urlParams = new URLSearchParams(window.location.search);
+    const ttclid = urlParams.get('ttclid') || '';
+    const value = parseFloat(urlParams.get('price') || urlParams.get('value') || '18.00') || 18.00;
+
+    function generateEventId(name) {
+      return `${name}_${Date.now()}_${Math.random().toString(36).substr(2,9)}`;
     }
 
-    // Função para enviar evento (com content_id válido para VSA)
-    async function sendTikTokServerEvent(eventName, extraProps = {}) {
-      const baseProps = {
-        content_type: 'product',
-        content_id: 'VIP_BANNER_001',  // Válido e fixo
-        content_name: 'Banner VIP - Vazadinhos das Famosas',
-        currency: 'BRL',
-        value: 18.00
-      };
+    async function sendEvent(eventName, extra = {}) {
+      if (localStorage.getItem('tiktok_presel_fired') && eventName !== 'ClickButton') return;
 
       const payload = {
-        pixel_code: TIKTOK_PIXEL_ID,
+        pixel_code: PIXEL_ID,
         event: eventName,
         event_id: generateEventId(eventName),
         timestamp: new Date().toISOString(),
         context: {
           user_agent: navigator.userAgent,
-          ip: '',
-          user: {
-            external_id: '',
-            phone_number: '',
-            email: ''
-          },
-          page: {
-            url: window.location.href,
-            referrer: document.referrer || ''
-          }
+          page: { url: window.location.href, referrer: document.referrer || '' },
+          ad: ttclid ? { callback: ttclid } : {}   // AQUI SOBE O EMQ DO PAGE VIEW!
         },
         properties: {
-          ...baseProps,
-          ...extraProps
+          content_type: 'product',
+          content_id: 'VIP_BANNER_001',
+          content_name: 'Banner VIP - Vazadinhos das Famosas',
+          currency: 'BRL',
+          value: value,
+          ...extra
         }
       };
 
-      // Validação
-      if (!payload.properties.content_id || payload.properties.content_id.trim() === '') {
-        console.error('[TikTok VSA] content_id inválido!');
-        return;
-      }
-
       try {
-        const response = await fetch(API_ENDPOINT, {
+        await fetch(API, {
           method: 'POST',
-          headers: {
-            'Access-Token': TIKTOK_ACCESS_TOKEN,
-            'Content-Type': 'application/json'
-          },
+          headers: { 'Access-Token': TOKEN, 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
-
-        const result = await response.json();
-        if (response.ok && result.code === 0) {
-          console.log(`[TikTok Server] ${eventName} enviado com sucesso!`);
-        } else {
-          console.error(`[TikTok Server] Erro ${eventName}:`, result);
-        }
-      } catch (err) {
-        console.error('[TikTok Server] Falha:', err);
-      }
+        console.log(`[TikTok] ${eventName} enviado com ttclid → EMQ alto`);
+      } catch(e) {}
     }
 
-    // 1. ViewContent
+    // ViewContent com ttclid (EMQ 90+)
     window.addEventListener('load', () => {
-      sendTikTokServerEvent('ViewContent');
-      if (window.ttq) {
-        ttq.track('ViewContent', {
-          content_id: 'VIP_BANNER_001',
-          content_type: 'product',
-          value: 18.00,
-          currency: 'BRL'
-        });
-      }
+      if (localStorage.getItem('tiktok_presel_fired')) return;
+      setTimeout(async () => {
+        await sendEvent('ViewContent');
+        if (window.ttq) ttq.track('ViewContent', { value, currency: 'BRL', content_id: 'VIP_BANNER_001' });
+        localStorage.setItem('tiktok_presel_fired', 'true');
+      }, 800);
     });
 
-    // 2. ClickButton + CompleteRegistration
-    document.getElementById('enter-btn').addEventListener('click', () => {
-      sendTikTokServerEvent('ClickButton', { content_name: 'Botão Entrar Agora' });
-      sendTikTokServerEvent('CompleteRegistration', { 
-        content_name: 'Entrada no Grupo VIP',
-        value: 18.00
-      });
-
+    // ClickButton + CompleteRegistration
+    document.getElementById('enter-btn').addEventListener('click', async () => {
+      await sendEvent('ClickButton');
+      await sendEvent('CompleteRegistration', { value });
       if (window.ttq) {
-        ttq.track('ClickButton', { content_id: 'VIP_BANNER_001' });
-        ttq.track('CompleteRegistration', { 
-          content_id: 'VIP_BANNER_001',
-          value: 18.00,
-          currency: 'BRL'
-        });
+        ttq.track('ClickButton');
+        ttq.track('CompleteRegistration', { value, currency: 'BRL', content_id: 'VIP_BANNER_001' });
       }
     });
   </script>
