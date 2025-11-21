@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body {
-            background-colorable: #0e0e0e;
+            background-color: #0e0e0e;
             color: white;
             font-family: 'Poppins', sans-serif;
             text-align: center;
@@ -55,27 +55,19 @@
     <!-- TikTok Pixel Code Start (NOVO PIXEL) -->
     <script>
         !function (w, d, t) {
-            w.TiktokAnalyticsObject = t;
-            var ttq = w[t] = w[t] || [];
-            ttq.methods = ["page", "track", "identify", "instances", "debug", "on", "off", "once", "ready", "alias", "group", "enableCookie", "disableCookie", "holdConsent", "revokeConsent", "grantConsent"];
-            ttq.setAndDefer = function(t, e) {
-                t[e] = function() {
-                    t.push([e].concat(Array.prototype.slice.call(arguments, 0)))
-                }
-            };
-            for (var i = 0; i < ttq.methods.length; i++) ttq.setAndDefer(ttq, ttq.methods[i]);
-            ttq.instance = function(t) {
-                for (var e = ttq._i[t] || [], n = 0; n < ttq.methods.length; n++) ttq.setAndDefer(e, ttq.methods[n]);
-                return e
-            };
-            ttq.load = function(e, n) {
-                var r = "https://analytics.tiktok.com/i18n/pixel/events.js",
-                    o = n && n.partner;
-                ttq._i = ttq._i || {}, ttq._i[e] = [], ttq._i[e]._u = r, ttq._t = ttq._t || {}, ttq._t[e] = +new Date, ttq._o = ttq._o || {}, ttq._o[e] = n || {};
-                var n = document.createElement("script");
-                n.type = "text/javascript", n.async = !0, n.src = r + "?sdkid=" + e + "&lib=" + t;
-                var e = document.getElementsByTagName("script")[0];
-                e.parentNode.insertBefore(n, e)
+            w.TiktokAnalyticsObject=t;
+            var ttq=w[t]=w[t]||[];
+            ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"];
+            ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};
+            for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);
+            ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e};
+            ttq.load=function(e,n){
+                var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;
+                ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};
+                var n=document.createElement("script");
+                n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;
+                var e=document.getElementsByTagName("script")[0];
+                e.parentNode.insertBefore(n,e)
             };
             ttq.load('D455V8RC77U505N9060G');
             ttq.page();
@@ -98,16 +90,14 @@
         const TIKTOK_ACCESS_TOKEN = '3ca706076f67309a1e205e3f1f5d9aed0acef913';
         const API_ENDPOINT = 'https://business-api.tiktok.com/open_api/v1.3/event/track/';
 
-        // Função para gerar event_id único
         function generateEventId(eventName) {
             return `${eventName}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
         }
 
-        // Função para enviar evento (com content_id válido para VSA)
         async function sendTikTokServerEvent(eventName, extraProps = {}) {
             const baseProps = {
                 content_type: 'product',
-                content_id: 'VIP_BANNER_001', // Válido e fixo
+                content_id: 'VIP_BANNER_001',
                 content_name: 'Banner VIP - Vazadinhos das Famosas',
                 currency: 'BRL',
                 value: 18.00
@@ -137,7 +127,6 @@
                 }
             };
 
-            // Validação
             if (!payload.properties.content_id || payload.properties.content_id.trim() === '') {
                 console.error('[TikTok VSA] content_id inválido!');
                 return;
@@ -163,7 +152,6 @@
             }
         }
 
-        // 1. ViewContent
         window.addEventListener('load', () => {
             sendTikTokServerEvent('ViewContent');
             if (window.ttq) {
@@ -176,7 +164,6 @@
             }
         });
 
-        // 2. ClickButton + CompleteRegistration
         document.getElementById('enter-btn').addEventListener('click', () => {
             sendTikTokServerEvent('ClickButton', { content_name: 'Botão Entrar Agora' });
             sendTikTokServerEvent('CompleteRegistration', {
