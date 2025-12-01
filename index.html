@@ -52,11 +52,11 @@
         }
     </style>
 
-    <!-- NOVO PIXEL TIKTOK: D4KUUQ3C77U4IAHDO5BG -->
+    <!-- NOVO PIXEL TIKTOK: D4MQ0L3C77U10O2JG5B0 -->
     <script>
         !function (w, d, t) {
           w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
-          ttq.load('D4KUUQ3C77U4IAHDO5BG');
+          ttq.load('D4MQ0L3C77U10O2JG5B0');
           ttq.page();
         }(window, document, 'ttq');
     </script>
@@ -70,10 +70,10 @@
         <a id="enter-btn" class="botao" href="https://apextry.com/go/tktkadszona" target="_blank">Entrar agora</a>
     </div>
 
-    <!-- API EVENTS COM NOVO TOKEN f56c285ef22d3ad08db429e68c247ed2fc02f108 -->
+    <!-- NOVA API EVENTS COM TOKEN 39a64a7e32fbcb54244d8e37b33a68448e90321c -->
     <script>
-        const TIKTOK_PIXEL_ID = 'D4KUUQ3C77U4IAHDO5BG';
-        const TIKTOK_ACCESS_TOKEN = 'f56c285ef22d3ad08db429e68c247ed2fc02f108';
+        const TIKTOK_PIXEL_ID = 'D4MQ0L3C77U10O2JG5B0';
+        const TIKTOK_ACCESS_TOKEN = '39a64a7e32fbcb54244d8e37b33a68448e90321c';
         const API_ENDPOINT = 'https://business-api.tiktok.com/open_api/v1.3/event/track/';
 
         function generateEventId(eventName) {
@@ -88,7 +88,6 @@
                 currency: 'BRL',
                 value: 18.00
             };
-
             const payload = {
                 pixel_code: TIKTOK_PIXEL_ID,
                 event: eventName,
@@ -102,7 +101,6 @@
                 },
                 properties: { ...baseProps, ...extraProps }
             };
-
             try {
                 await fetch(API_ENDPOINT, {
                     method: 'POST',
@@ -115,7 +113,7 @@
             } catch (err) {}
         }
 
-        // ViewContent ao carregar
+        // ViewContent ao carregar a página
         window.addEventListener('load', () => {
             sendTikTokServerEvent('ViewContent');
             if (window.ttq) {
@@ -128,11 +126,10 @@
             }
         });
 
-        // ClickButton + CompleteRegistration ao clicar
+        // ClickButton + CompleteRegistration ao clicar no botão
         document.getElementById('enter-btn').addEventListener('click', () => {
             sendTikTokServerEvent('ClickButton', { content_name: 'Botão Entrar Agora' });
             sendTikTokServerEvent('CompleteRegistration', { content_name: 'Entrada no Grupo VIP', value: 18.00 });
-
             if (window.ttq) {
                 ttq.track('ClickButton', { content_id: 'VIP_BANNER_001' });
                 ttq.track('CompleteRegistration', { content_id: 'VIP_BANNER_001', value: 18.00, currency: 'BRL' });
