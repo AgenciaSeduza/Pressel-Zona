@@ -5,7 +5,7 @@ exports.handler = async (event) => {
     const response = await fetch("https://business-api.tiktok.com/open_api/v1.3/event/track/", {
       method: "POST",
       headers: {
-        "Access-Token": "SEU_ACCESS_TOKEN_AQUI",
+        "Access-Token": "028dca20c2fb5dd89d0631849005823bcd422181",
         "Content-Type": "application/json"
       },
       body: JSON.stringify(data)
