@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Acesso ao Telegram</title>
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
     <style>
         body {
             background-color: #0e0e0e;
@@ -14,6 +16,7 @@
             margin: 0;
             padding: 0;
         }
+
         .container {
             max-width: 420px;
             margin: 60px auto;
@@ -22,20 +25,24 @@
             border-radius: 14px;
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.08);
         }
+
         img {
             width: 100%;
             border-radius: 10px;
             margin-bottom: 20px;
         }
+
         h1 {
             font-size: 24px;
             margin-bottom: 10px;
         }
+
         p {
             color: #cccccc;
             font-size: 15px;
             margin-bottom: 25px;
         }
+
         .botao {
             display: inline-block;
             background-color: #0088cc;
@@ -46,74 +53,58 @@
             font-weight: 600;
             transition: 0.3s;
         }
+
         .botao:hover {
             background-color: #00aaff;
             transform: scale(1.05);
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <img src="banner.jpg" alt="Banner promocional">
         <img src="foto.jpg" alt="Instruções de acesso">
         <h1>Acesso ao Telegram</h1>
         <p>Clique no botão abaixo para continuar e entrar no grupo VIP.</p>
-        <a id="enter-btn" class="botao" href="https://apextry.com/go/tktkadszona" target="_blank">Entrar agora</a>
+
+        <a id="enter-btn" class="botao" href="https://apextry.com/go/tktkadszona" target="_blank">
+            Entrar agora
+        </a>
     </div>
 
-    <!-- APENAS API EVENTS (SEM SDK) - PIXEL NOVO D4O86QJC77UEBGID73OG -->
     <script>
-        const PIXEL_ID = 'D4O86QJC77UEBGID73OG';
-        const ACCESS_TOKEN = '028dca20c2fb5dd89d0631849005823bcd422181';
-        const API_ENDPOINT = 'https://business-api.tiktok.com/open_api/v1.3/event/track/';
-        const PRICE = 18.00;
+        const VALUE = 18.00;
 
-        function generateEventId(event) {
-            return `${event}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-        }
-
-        async function sendServerEvent(eventName, extraProps = {}) {
-            const payload = {
-                pixel_code: PIXEL_ID,
-                event: eventName,
-                event_id: generateEventId(eventName),
-                timestamp: new Date().toISOString(),
-                context: {
-                    user_agent: navigator.userAgent,
-                    page: { url: window.location.href }
-                },
-                properties: {
-                    currency: 'BRL',
-                    value: PRICE,
-                    content_type: 'product_group',
-                    content_id: 'GRUPO_VIP_001',
-                    content_name: 'Acesso VIP - Zona Oculta',
-                    ...extraProps
-                }
-            };
-
+        // Enviar evento server-side pela Netlify
+        async function sendEvent(eventName) {
             try {
-                await fetch(API_ENDPOINT, {
-                    method: 'POST',
-                    headers: {
-                        'Access-Token': ACCESS_TOKEN,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(payload)
+                await fetch("/.netlify/functions/tiktok-event", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        event: eventName,
+                        value: VALUE,
+                        page: window.location.href
+                    })
                 });
-            } catch (e) {}
+                console.log("Evento enviado:", eventName);
+            } catch (err) {
+                console.warn("Erro ao enviar evento:", err);
+            }
         }
 
-        // ViewContent ao carregar a página
-        window.addEventListener('load', () => {
-            sendServerEvent('ViewContent');
+        // ViewContent → quando carrega
+        window.addEventListener("load", () => {
+            sendEvent("ViewContent");
         });
 
-        // InitiateCheckout + ClickButton no clique
-        document.getElementById('enter-btn').addEventListener('click', () => {
-            sendServerEvent('InitiateCheckout');
-            sendServerEvent('ClickButton');
+        // InitiateCheckout + ClickButton → quando clica
+        document.getElementById("enter-btn").addEventListener("click", () => {
+            sendEvent("InitiateCheckout");
+            sendEvent("ClickButton");
         });
     </script>
+
 </body>
 </html>
