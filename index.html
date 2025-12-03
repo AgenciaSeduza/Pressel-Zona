@@ -73,38 +73,70 @@
         </a>
     </div>
 
-    <script>
-        const VALUE = 18.00;
+<script>
+  const PRICE = 18.00;
 
-        // Enviar evento server-side pela Netlify
-        async function sendEvent(eventName) {
-            try {
-                await fetch("/.netlify/functions/tiktok-event", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(payload){
-                        event: eventName,
-                        value: VALUE,
-                        page: window.location.href
-                    })
-                });
-                console.log("Evento enviado:", eventName);
-            } catch (err) {
-                console.warn("Erro ao enviar evento:", err);
-            }
+  function generateEventId(event) {
+    return `${event}_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+  }
+
+  async function sendEvent(eventName, extraProps = {}) {
+    const payload = {
+      pixel_code: "D4O86QJC77UEBGID73OG",
+      event: eventName,
+      event_id: generateEventId(eventName),
+      timestamp: Math.floor(Date.now() / 1000),
+
+      context: {
+        user_agent: navigator.userAgent,
+        page: {
+          url: window.location.href
         }
+      },
 
-        // ViewContent → quando carrega
-        window.addEventListener("load", () => {
-            sendEvent("ViewContent");
-        });
+      properties: {
+        currency: "BRL",
+        value: PRICE,
+        content_type: "product",
+        content_id: "GRUPO_VIP_001",
+        content_name: "Acesso VIP - Zona Oculta",
+        ...extraProps
+      }
+    };
 
-        // InitiateCheckout + ClickButton → quando clica
-        document.getElementById("enter-btn").addEventListener("click", () => {
-            sendEvent("InitiateCheckout");
-            sendEvent("ClickButton");
-        });
-    </script>
+    try {
+      const response = await fetch("/.netlify/functions/tiktok-event", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const result = await response.json();
+      console.log("✅ Evento enviado:", eventName, result);
+
+    } catch (error) {
+      console.error("❌ Erro ao enviar evento:", error);
+    }
+  }
+
+  // Quando a página carregar
+  window.addEventListener("load", function () {
+    sendEvent("ViewContent");
+  });
+
+  // Quando clicar no botão
+  const btn = document.getElementById("enter-btn");
+
+  if (btn) {
+    btn.addEventListener("click", function () {
+      sendEvent("InitiateCheckout");
+      sendEvent("ClickButton");
+    });
+  }
+</script>
+
 
 </body>
 </html>
