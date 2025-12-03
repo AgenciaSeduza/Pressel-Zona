@@ -51,15 +51,6 @@
             transform: scale(1.05);
         }
     </style>
-
-    <!-- TikTok Pixel Atualizado -->
-    <script>
-    !function (w, d, t) {
-      w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};var a=document.createElement("script");a.type="text/javascript",a.async=!0,a.src=r+"?sdkid="+e+"&lib="+t;var i=document.getElementsByTagName("script")[0];i.parentNode.insertBefore(a,i)};
-      ttq.load('D4MTB8JC77U7MI8IOAHG');
-      ttq.page();
-    }(window, document, 'ttq');
-    </script>
 </head>
 <body>
     <div class="container">
@@ -70,34 +61,34 @@
         <a id="enter-btn" class="botao" href="https://apextry.com/go/tktkadszona" target="_blank">Entrar agora</a>
     </div>
 
-    <!-- TikTok Events API (Server-Side) com seu token atualizado -->
+    <!-- APENAS API EVENTS (SEM SDK) - PIXEL NOVO D4O86QJC77UEBGID73OG -->
     <script>
-        const PIXEL_ID = 'D4MTB8JC77U7MI8IOAHG';
-        const ACCESS_TOKEN = '11bdcd7657bd2109cbcc32d186145183304036e3';
+        const PIXEL_ID = 'D4O86QJC77UEBGID73OG';
+        const ACCESS_TOKEN = '028dca20c2fb5dd89d0631849005823bcd422181';
         const API_ENDPOINT = 'https://business-api.tiktok.com/open_api/v1.3/event/track/';
+        const PRICE = 18.00;
 
-        function generateEventId() {
-            return `event_${Date.now()}_${Math.floor(Math.random() * 1000000)}`;
+        function generateEventId(event) {
+            return `${event}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
         }
 
-        async function sendServerEvent(eventName, properties = {}) {
+        async function sendServerEvent(eventName, extraProps = {}) {
             const payload = {
                 pixel_code: PIXEL_ID,
                 event: eventName,
-                event_id: generateEventId(),
+                event_id: generateEventId(eventName),
                 timestamp: new Date().toISOString(),
                 context: {
                     user_agent: navigator.userAgent,
-                    ip: "",
-                    page: { url: window.location.href, referrer: document.referrer || "" }
+                    page: { url: window.location.href }
                 },
                 properties: {
-                    content_type: "product_group",
-                    content_id: "GRUPO_VIP_001",
-                    content_name: "Grupo VIP Academia",
-                    currency: "BRL",
-                    value: 18.00,
-                    ...properties
+                    currency: 'BRL',
+                    value: PRICE,
+                    content_type: 'product_group',
+                    content_id: 'GRUPO_VIP_001',
+                    content_name: 'Acesso VIP - Zona Oculta',
+                    ...extraProps
                 }
             };
 
@@ -110,23 +101,18 @@
                     },
                     body: JSON.stringify(payload)
                 });
-            } catch (e) { }
+            } catch (e) {}
         }
 
         // ViewContent ao carregar a página
         window.addEventListener('load', () => {
             sendServerEvent('ViewContent');
-            if (window.ttq) ttq.track('ViewContent');
         });
 
-        // Click + CompleteRegistration ao clicar no botão
+        // InitiateCheckout + ClickButton no clique
         document.getElementById('enter-btn').addEventListener('click', () => {
+            sendServerEvent('InitiateCheckout');
             sendServerEvent('ClickButton');
-            sendServerEvent('CompleteRegistration', { value: 18.00 });
-            if (window.ttq) {
-                ttq.track('ClickButton');
-                ttq.track('CompleteRegistration', { value: 18.00, currency: 'BRL' });
-            }
         });
     </script>
 </body>
